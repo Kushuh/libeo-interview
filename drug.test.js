@@ -1,7 +1,7 @@
 import Drug, { drugs } from "./drug";
 import rules, { maxBenefit } from "./drug_rules";
 
-describe("Drug", () => {
+describe("Drug - constructor", () => {
   it("should reject non valid constructor  values", () => {
     expect(
       () =>
@@ -55,5 +55,71 @@ describe("Drug", () => {
     expect(fervex.name).toBe(drugs.fervex.name);
     expect(fervex.benefit).toBe(15);
     expect(fervex.expiresIn).toBe(Infinity);
+  });
+});
+
+describe("Drug - update (standard)", () => {
+  it("should decrease correctly when it doesn't reach 0 before expiry", () => {
+    const dummy = new Drug({
+      name: "dummy",
+      expiresIn: 1,
+      benefit: 5,
+      rule: rules.standard
+    });
+
+    expect(dummy.expiresIn).toBe(1);
+    expect(dummy.benefit).toBe(5);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(0);
+    expect(dummy.benefit).toBe(4);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(-1);
+    expect(dummy.benefit).toBe(3);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(-2);
+    expect(dummy.benefit).toBe(1);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(-3);
+    expect(dummy.benefit).toBe(0);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(-4);
+    expect(dummy.benefit).toBe(0);
+  });
+
+  it("should decrease correctly when it reaches 0 before expiry", () => {
+    const dummy = new Drug({
+      name: "dummy",
+      expiresIn: 2,
+      benefit: 1,
+      rule: rules.standard
+    });
+
+    expect(dummy.expiresIn).toBe(2);
+    expect(dummy.benefit).toBe(1);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(1);
+    expect(dummy.benefit).toBe(0);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(0);
+    expect(dummy.benefit).toBe(0);
+
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(-1);
+    expect(dummy.benefit).toBe(0);
   });
 });
