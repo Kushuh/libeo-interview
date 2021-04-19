@@ -58,68 +58,42 @@ describe("Drug - constructor", () => {
   });
 });
 
+const testUpdater = (init, expected) => {
+  const dummy = new Drug(init);
+
+  expect(dummy.expiresIn).toBe(expected[0][0]);
+  expect(dummy.benefit).toBe(expected[0][1]);
+
+  for (const e of expected.slice(1)) {
+    dummy.update();
+
+    expect(dummy.expiresIn).toBe(e[0]);
+    expect(dummy.benefit).toBe(e[1]);
+  }
+};
+
 describe("Drug - update (standard)", () => {
   it("should decrease correctly when it doesn't reach 0 before expiry", () => {
-    const dummy = new Drug({
-      name: "dummy",
-      expiresIn: 1,
-      benefit: 5,
-      rule: rules.standard
-    });
-
-    expect(dummy.expiresIn).toBe(1);
-    expect(dummy.benefit).toBe(5);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(0);
-    expect(dummy.benefit).toBe(4);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(-1);
-    expect(dummy.benefit).toBe(3);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(-2);
-    expect(dummy.benefit).toBe(1);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(-3);
-    expect(dummy.benefit).toBe(0);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(-4);
-    expect(dummy.benefit).toBe(0);
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 1,
+        benefit: 5,
+        rule: rules.standard
+      },
+      [[1, 5], [0, 4], [-1, 3], [-2, 1], [-3, 0], [-4, 0]]
+    );
   });
 
   it("should decrease correctly when it reaches 0 before expiry", () => {
-    const dummy = new Drug({
-      name: "dummy",
-      expiresIn: 2,
-      benefit: 1,
-      rule: rules.standard
-    });
-
-    expect(dummy.expiresIn).toBe(2);
-    expect(dummy.benefit).toBe(1);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(1);
-    expect(dummy.benefit).toBe(0);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(0);
-    expect(dummy.benefit).toBe(0);
-
-    dummy.update();
-
-    expect(dummy.expiresIn).toBe(-1);
-    expect(dummy.benefit).toBe(0);
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 2,
+        benefit: 1,
+        rule: rules.standard
+      },
+      [[2, 1], [1, 0], [0, 0], [-1, 0]]
+    );
   });
 });
