@@ -62,7 +62,7 @@ class Drug {
 
     // Enforce name not to be empty.
     if (name == null || name === "") {
-      throw new Error("drug name cannot be empty");
+      throw new Error("illegal drug name: cannot be empty");
     }
 
     if (benefit < 0) {
