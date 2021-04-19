@@ -30,4 +30,30 @@ describe("Drug", () => {
         1}: cannot be greater than ${maxBenefit}`
     );
   });
+
+  it("should instantiate with valid values", () => {
+    let fervex = new Drug({ ...drugs.fervex, benefit: 15, expiresIn: 30 });
+
+    expect(fervex.name).toBe(drugs.fervex.name);
+    expect(fervex.benefit).toBe(15);
+    expect(fervex.expiresIn).toBe(30);
+
+    fervex = new Drug({ ...drugs.fervex, benefit: 0, expiresIn: 30 });
+
+    expect(fervex.name).toBe(drugs.fervex.name);
+    expect(fervex.benefit).toBe(0);
+    expect(fervex.expiresIn).toBe(30);
+
+    fervex = new Drug({ ...drugs.fervex, benefit: maxBenefit, expiresIn: 30 });
+
+    expect(fervex.name).toBe(drugs.fervex.name);
+    expect(fervex.benefit).toBe(maxBenefit);
+    expect(fervex.expiresIn).toBe(30);
+
+    fervex = new Drug({ ...drugs.fervex, benefit: 15, expiresIn: Infinity });
+
+    expect(fervex.name).toBe(drugs.fervex.name);
+    expect(fervex.benefit).toBe(15);
+    expect(fervex.expiresIn).toBe(Infinity);
+  });
 });
