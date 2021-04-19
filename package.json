@@ -7,11 +7,12 @@
   "private": true,
   "engines": {
     "yarn": ">=1.7.0",
-    "node": "=12.x"
+    "node": ">=12.x"
   },
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
+    "lint:fix": "npm run lint -- --fix",
     "start": "babel-node index.js"
   },
   "devDependencies": {
