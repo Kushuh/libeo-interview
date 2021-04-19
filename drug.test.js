@@ -27,7 +27,7 @@ describe("Drug", () => {
         new Drug({ ...drugs.fervex, expiresIn: 15, benefit: maxBenefit + 1 })
     ).toThrow(
       `illegal drug benefit value ${maxBenefit +
-        1} : cannot be greater than ${maxBenefit}`
+        1}: cannot be greater than ${maxBenefit}`
     );
   });
 });
