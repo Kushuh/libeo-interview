@@ -20,7 +20,7 @@ const maxBenefit = 50;
  */
 const rules = {
   standard: drug => {
-    const currentBenefit = drug.getBenefit();
+    const currentBenefit = drug.benefit;
 
     // Prevent benefit from being lower than 0.
     if (currentBenefit === 0) {
@@ -29,14 +29,14 @@ const rules = {
 
     // Drug benefit decreases twice as fast passed expiry date, however it is also important to ensure the benefit
     // value stays positive.
-    if (drug.getExpiry() < 0 && currentBenefit > 1) {
+    if (drug.expiresIn < 0 && currentBenefit > 1) {
       return -2;
     }
 
     return -1;
   },
   herbalTea: drug => {
-    const currentBenefit = drug.getBenefit();
+    const currentBenefit = drug.benefit;
 
     // Prevent benefit from being greater than 50.
     if (currentBenefit === maxBenefit) {
@@ -45,15 +45,15 @@ const rules = {
 
     // Drug benefit increases twice as fast passed expiry date, however it is also important to ensure the benefit
     // value stays under or equal to maxBenefit.
-    if (drug.getExpiry() < 0 && currentBenefit < maxBenefit - 1) {
+    if (drug.expiresIn < 0 && currentBenefit < maxBenefit - 1) {
       return 2;
     }
 
     return 1;
   },
   fervex: drug => {
-    const currentBenefit = drug.getBenefit();
-    const currentExpiry = drug.getExpiry();
+    const currentBenefit = drug.benefit;
+    const currentExpiry = drug.expiresIn;
 
     // Set benefit to 0 passed expiration date.
     if (currentExpiry < 0) {
@@ -78,7 +78,7 @@ const rules = {
   },
   magicPill: () => 0,
   dafalgan: drug => {
-    const currentBenefit = drug.getBenefit();
+    const currentBenefit = drug.benefit;
 
     // Prevent benefit from being lower than 0.
     if (currentBenefit === 0) {
@@ -86,7 +86,7 @@ const rules = {
     }
 
     // Dafalgan benefit decreases twice as fast as standard drug.
-    if (drug.getExpiry() < 0) {
+    if (drug.expiresIn < 0) {
       if (currentBenefit > 4) {
         return -4;
       }

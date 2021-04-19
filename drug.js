@@ -77,56 +77,11 @@ class Drug {
       );
     }
 
-    this.#name = name;
-    this.#expiresIn = expiresIn;
-    this.#benefit = benefit;
-    this.#rule = rule;
+    this.name = name;
+    this.expiresIn = expiresIn;
+    this.benefit = benefit;
+    this.rule = rule;
   }
-
-  /**
-   * @type string
-   * @description the name of the drug
-   */
-  #name;
-
-  /**
-   * @type number
-   * @description denotes the number of days we have until the item expires
-   */
-  #expiresIn;
-
-  /**
-   * @type number
-   * @description denotes how powerful the drug is
-   */
-  #benefit;
-
-  /**
-   * @type UpdateRule
-   * @description rule to update the drug properties over time
-   */
-  #rule;
-
-  /**
-   * returns the name of the current drug.
-   *
-   * @return {string}
-   */
-  getName = () => this.#name;
-
-  /**
-   * returns the remaining days befor expiry
-   *
-   * @return {number}
-   */
-  getExpiry = () => this.#expiresIn;
-
-  /**
-   * returns the current benefit value of the drug.
-   *
-   * @return {number}
-   */
-  getBenefit = () => this.#benefit;
 }
 
 export default Drug;
