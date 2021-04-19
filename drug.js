@@ -86,9 +86,9 @@ class Drug {
   }
 
   update() {
-    this.benefit += this.rule(this);
     // Will still work for Infinity values since they are never changed when decreased.
     this.expiresIn--;
+    this.benefit += this.rule(this);
   }
 }
 

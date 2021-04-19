@@ -81,7 +81,7 @@ describe("Drug - update (standard)", () => {
         benefit: 5,
         rule: rules.standard
       },
-      [[1, 5], [0, 4], [-1, 3], [-2, 1], [-3, 0], [-4, 0]]
+      [[1, 5], [0, 4], [-1, 2], [-2, 0], [-3, 0]]
     );
   });
 
@@ -94,6 +94,128 @@ describe("Drug - update (standard)", () => {
         rule: rules.standard
       },
       [[2, 1], [1, 0], [0, 0], [-1, 0]]
+    );
+  });
+});
+
+describe("Drug - update (herbal tea)", () => {
+  it("should decrease correctly when it doesn't reach max value before expiry", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 2,
+        benefit: 44,
+        rule: rules.herbalTea
+      },
+      [[2, 44], [1, 45], [0, 46], [-1, 48], [-2, 50], [-3, 50]]
+    );
+  });
+
+  it("should decrease correctly when it reaches max value before expiry", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 2,
+        benefit: 49,
+        rule: rules.herbalTea
+      },
+      [[2, 49], [1, 50], [0, 50], [-1, 50]]
+    );
+  });
+});
+
+describe("Drug - update (magic pill)", () => {
+  it("should never move", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: Infinity,
+        benefit: 30,
+        rule: rules.magicPill
+      },
+      [[Infinity, 30], [Infinity, 30], [Infinity, 30]]
+    );
+  });
+});
+
+describe("Drug - update (fervex)", () => {
+  it("should decrease correctly when it doesn't reach max value before expiry", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 12,
+        benefit: 20,
+        rule: rules.fervex
+      },
+      [
+        [12, 20],
+        [11, 21],
+        [10, 23],
+        [9, 25],
+        [8, 27],
+        [7, 29],
+        [6, 31],
+        [5, 34],
+        [4, 37],
+        [3, 40],
+        [2, 43],
+        [1, 46],
+        [0, 49],
+        [-1, 0]
+      ]
+    );
+  });
+
+  it("should decrease correctly when it reaches max value before expiry", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 12,
+        benefit: 30,
+        rule: rules.fervex
+      },
+      [
+        [12, 30],
+        [11, 31],
+        [10, 33],
+        [9, 35],
+        [8, 37],
+        [7, 39],
+        [6, 41],
+        [5, 44],
+        [4, 47],
+        [3, 50],
+        [2, 50],
+        [1, 50],
+        [0, 50],
+        [-1, 0]
+      ]
+    );
+  });
+});
+
+describe("Drug - update (dafalgan)", () => {
+  it("should decrease correctly when it doesn't reach 0 before expiry", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 1,
+        benefit: 10,
+        rule: rules.dafalgan
+      },
+      [[1, 10], [0, 8], [-1, 4], [-2, 0], [-3, 0]]
+    );
+  });
+
+  it("should decrease correctly when it reaches 0 before expiry", () => {
+    testUpdater(
+      {
+        name: "dummy",
+        expiresIn: 2,
+        benefit: 2,
+        rule: rules.dafalgan
+      },
+      [[2, 2], [1, 0], [0, 0], [-1, 0]]
     );
   });
 });
