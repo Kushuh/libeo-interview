@@ -36,6 +36,24 @@ const drugs = {
 };
 
 /**
+ * Constructors for all standards types of drugs.
+ *
+ * @type {Object<Drug#constructor>}
+ */
+const build = {
+  Doliprane: (expiresIn, benefit) =>
+    new Drug({ ...drugs.doliprane, expiresIn, benefit }),
+  HerbalTea: (expiresIn, benefit) =>
+    new Drug({ ...drugs.herbalTea, expiresIn, benefit }),
+  Fervex: (expiresIn, benefit) =>
+    new Drug({ ...drugs.fervex, expiresIn, benefit }),
+  MagicPill: (expiresIn, benefit) =>
+    new Drug({ ...drugs.magicPill, expiresIn, benefit }),
+  Dafalgan: (expiresIn, benefit) =>
+    new Drug({ ...drugs.dafalgan, expiresIn, benefit })
+};
+
+/**
  * Drug represents a specific instance of a drug (and not general information about a kind of drug) that is available
  * for sell.
  *
@@ -93,4 +111,4 @@ class Drug {
 }
 
 export default Drug;
-export { drugs };
+export { drugs, build };
