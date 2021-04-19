@@ -1,11 +1,4 @@
-import rules from "./drug_rules";
-
-/**
- * maxBenefit is a constant representing the maximum benefit value a drug can have.
- *
- * @type {number}
- */
-const maxBenefit = 50;
+import rules, { maxBenefit } from "./drug_rules";
 
 /**
  * @typedef {Object} DrugData
@@ -35,6 +28,10 @@ const drugs = {
   magicPill: {
     rule: rules.magicPill,
     name: "Magic Pill"
+  },
+  dafalgan: {
+    rule: rules.dafalgan,
+    name: "Dafalgan"
   }
 };
 

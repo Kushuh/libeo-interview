@@ -1,4 +1,11 @@
 /**
+ * maxBenefit is a constant representing the maximum benefit value a drug can have.
+ *
+ * @type {number}
+ */
+const maxBenefit = 50;
+
+/**
  * @typedef {function} UpdateRule
  *
  * @param {Drug} drug
@@ -69,7 +76,31 @@ const rules = {
 
     return 1;
   },
-  magicPill: () => 0
+  magicPill: () => 0,
+  dafalgan: drug => {
+    const currentBenefit = drug.getBenefit();
+
+    // Prevent benefit from being lower than 0.
+    if (currentBenefit === 0) {
+      return 0;
+    }
+
+    // Dafalgan benefit decreases twice as fast as standard drug.
+    if (drug.getExpiry() < 0) {
+      if (currentBenefit > 4) {
+        return -4;
+      }
+
+      return -currentBenefit;
+    }
+
+    if (currentBenefit > 1) {
+      return -2;
+    }
+
+    return -1;
+  }
 };
 
 export default rules;
+export { maxBenefit };
